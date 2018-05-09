@@ -467,6 +467,26 @@ double const ScalePhotoWidth = 1000;
 #pragma mark - UIButton Action
 - (IBAction)btnCamera_Click:(id)sender
 {
+    [self showCamera];
+}
+
+- (IBAction)btnPhotoLibrary_Click:(id)sender
+{
+    [self showAlum];
+}
+
+- (IBAction)btnCancel_Click:(id)sender
+{
+    if (self.arrSelectedModels.count) {
+        [self requestSelPhotos:nil data:self.arrSelectedModels hideAfterCallBack:YES];
+        return;
+    }
+    
+    if (self.cancleBlock) self.cancleBlock();
+    [self hide];
+}
+
+- (void)showCamera {
     if (![ZLPhotoManager haveCameraAuthority]) {
         NSString *message = [NSString stringWithFormat:GetLocalLanguageTextValue(ZLPhotoBrowserNoCameraAuthorityText), kAPPName];
         ShowAlert(message, self.sender);
@@ -520,25 +540,13 @@ double const ScalePhotoWidth = 1000;
     }
 }
 
-- (IBAction)btnPhotoLibrary_Click:(id)sender
-{
+- (void)showAlum {
     if (![ZLPhotoManager havePhotoLibraryAuthority]) {
         [self showNoAuthorityVC];
     } else {
         self.animate = NO;
         [self pushThumbnailViewController];
     }
-}
-
-- (IBAction)btnCancel_Click:(id)sender
-{
-    if (self.arrSelectedModels.count) {
-        [self requestSelPhotos:nil data:self.arrSelectedModels hideAfterCallBack:YES];
-        return;
-    }
-    
-    if (self.cancleBlock) self.cancleBlock();
-    [self hide];
 }
 
 - (void)changeCancelBtnTitle

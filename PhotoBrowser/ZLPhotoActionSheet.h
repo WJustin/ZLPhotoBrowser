@@ -74,6 +74,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)showPhotoLibraryWithSender:(UIViewController *)sender;
 
+- (void)showCamera;
+
+- (void)showAlum;
 
 /**
  提供 预览用户已选择的照片，并可以取消已选择的照片 （需先设置 sender 参数）
